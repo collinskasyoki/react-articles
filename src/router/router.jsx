@@ -29,10 +29,6 @@ const router = createBrowserRouter([
         element: <Sites />,
       },
       {
-        path: "/about",
-        element: <About />,
-      },
-      {
         path: "/item/:id",
         element: <OneItem />,
       },
