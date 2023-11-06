@@ -19,10 +19,10 @@ const ArticleRenderer = ({ articles }) => {
                 <div className="entry-text">
                   <div className="entry-header">
                     <div className="entry-meta">
-                      <span className="cat-links">
+                      {/* <span className="cat-links">
                         <a href="#">Category 1</a>
                         <a href="#">Category 2</a>
-                      </span>
+                      </span> */}
                     </div>
                     <h1 className="entry-title">
                       <Link to={`/item/${onearticle.id}`}>

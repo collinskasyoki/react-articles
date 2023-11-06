@@ -36,7 +36,7 @@ const OneItem = () => {
                         return (
                           <Link
                             key={category.id}
-                            to=""
+                            to={`/categories/${category.id}`}
                             style={{ textTransform: "capitalize" }}
                           >
                             {category.name}
@@ -52,7 +52,10 @@ const OneItem = () => {
                     <span>Tagged in :</span>
                     {oneArticle.categories.map((category) => {
                       return (
-                        <Link key={category.id} to="">
+                        <Link
+                          key={category.id}
+                          to={`/categories/${category.id}`}
+                        >
                           {category.name}
                         </Link>
                       );
