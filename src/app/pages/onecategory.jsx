@@ -42,7 +42,6 @@ const OneCategory = () => {
               <ArticleRenderer articles={categoryArticles} />
             </div>
           </div>
-          {console.log(categoryArticles.pages)}
           {pages
             ? categoryArticles.pages &&
               categoryArticles.pages > 1 && (
