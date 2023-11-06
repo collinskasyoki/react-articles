@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { fetchArticles } from "./data";
 import ArticleRenderer from "./helpers/ArticleRenderer";
 
 const MainPage = () => {
-  const { data: articles, status } = useQuery("articles", () =>
-    fetchArticles()
-  );
+  const [page, setPage] = useState(1);
+  const {
+    data: articles,
+    status,
+    refetch: refetchArticles,
+  } = useQuery("articles", () => fetchArticles(page));
+
+  useEffect(() => {
+    refetchArticles();
+  }, [page]);
 
   const pages = articles
     ? Array.from({ length: articles.pages }, (_, index) => index + 1)
     : null;
+
+  const pageChange = (page) => {
+    setPage((prevState) => (prevState = page));
+  };
 
   return (
     <div id="bricks">
@@ -21,19 +32,6 @@ const MainPage = () => {
           <div className="row masonry">
             <div className="bricks-wrapper">
               <div className="grid-sizer"></div>
-              <article className="brick entry format-quote animate-this">
-                <div className="entry-thumb">
-                  <blockquote>
-                    <p>
-                      Good design is making something intelligible and
-                      memorable. Great design is making something memorable and
-                      meaningful.
-                    </p>
-
-                    <cite>Dieter Rams</cite>
-                  </blockquote>
-                </div>
-              </article>
               <ArticleRenderer articles={articles} />
             </div>
           </div>
@@ -41,19 +39,40 @@ const MainPage = () => {
           {pages && (
             <div className="row">
               <nav className="pagination">
-                <span className="page-numbers prev inactive">Prev</span>
+                <span
+                  className={`page-numbers prev ${page === 1 && "inactive"}`}
+                  style={page !== 1 ? { cursor: "pointer" } : {}}
+                  onClick={page !== 1 && (() => pageChange(page - 1))}
+                >
+                  Prev
+                </span>
                 {articles.pages && articles.pages >= 1
                   ? pages.map((item, index) => {
                       return (
-                        <a key={index} href="#" className="page-numbers">
+                        <a
+                          key={index}
+                          href="#"
+                          onClick={() => pageChange(item)}
+                          className={`page-numbers ${
+                            item === page && "current"
+                          } `}
+                        >
                           {item}
                         </a>
                       );
                     })
                   : ""}
-                <a href="#" className="page-numbers next">
+                <span
+                  className={`page-numbers next ${
+                    page === pages.length && "inactive"
+                  }`}
+                  style={page !== pages.length ? { cursor: "pointer" } : {}}
+                  onClick={
+                    page !== pages.length && (() => pageChange(page + 1))
+                  }
+                >
                   Next
-                </a>
+                </span>
               </nav>
             </div>
           )}

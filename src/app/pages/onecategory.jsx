@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { fetchCategoryArticles, fetchOneCategory } from "./data";
 import ArticleRenderer from "./helpers/ArticleRenderer";
 
 const OneCategory = () => {
+  const [page, setPage] = useState(1);
   const { id } = useParams();
-  const { data: categoryArticles, status } = useQuery("categoryarticles", () =>
-    fetchCategoryArticles(id)
-  );
+  const {
+    data: categoryArticles,
+    status,
+    refetch: refetchCategoryArticles,
+  } = useQuery("categoryarticles", () => fetchCategoryArticles(id, page));
   const { data: oneCategory, status: statusOneCategory } = useQuery(
     "onecategory",
     () => fetchOneCategory(id)
   );
 
+  useEffect(() => {
+    refetchCategoryArticles();
+  }, [page]);
+
   const pages = categoryArticles
     ? Array.from({ length: categoryArticles.pages }, (_, index) => index + 1)
     : null;
+
+  const pageChange = (page) => {
+    setPage((prevState) => (prevState = page));
+  };
 
   return (
     <div id="bricks">
@@ -47,17 +58,42 @@ const OneCategory = () => {
               categoryArticles.pages > 1 && (
                 <div className="row">
                   <nav className="pagination">
-                    <span className="page-numbers prev inactive">Prev</span>
-                    {pages.map((item, index) => {
-                      return (
-                        <a key={index} href="#" className="page-numbers">
-                          {item}
-                        </a>
-                      );
-                    })}
-                    <a href="#" className="page-numbers next">
+                    <span
+                      className={`page-numbers prev ${
+                        page === 1 && "inactive"
+                      }`}
+                      style={page !== 1 ? { cursor: "pointer" } : {}}
+                      onClick={page !== 1 && (() => pageChange(page - 1))}
+                    >
+                      Prev
+                    </span>
+                    {categoryArticles.pages && categoryArticles.pages >= 1
+                      ? pages.map((item, index) => {
+                          return (
+                            <a
+                              key={index}
+                              href="#"
+                              onClick={() => pageChange(item)}
+                              className={`page-numbers ${
+                                item === page && "current"
+                              } `}
+                            >
+                              {item}
+                            </a>
+                          );
+                        })
+                      : ""}
+                    <span
+                      className={`page-numbers next ${
+                        page === pages.length && "inactive"
+                      }`}
+                      style={page !== pages.length ? { cursor: "pointer" } : {}}
+                      onClick={
+                        page !== pages.length && (() => pageChange(page + 1))
+                      }
+                    >
                       Next
-                    </a>
+                    </span>
                   </nav>
                 </div>
               )

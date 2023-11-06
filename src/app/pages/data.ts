@@ -26,9 +26,13 @@ interface ArticleResults {
     pages: number;
 }
 
-const fetchArticles = async () => {
+const fetchArticles = async (page?) => {
+    let url = `${process.env.REACT_APP_API_BASE_URL}/articles?size=20`;
+    if (page)
+        url += `&page=${page}`
+
     try {
-        const results = await axios.get<ArticleResults[]>(`${process.env.REACT_APP_API_BASE_URL}/articles?size=20`);
+        const results = await axios.get<ArticleResults[]>(url);
         return results.data;
     } catch (error) {
         console.error(error);
@@ -66,9 +70,14 @@ const fetchOneCategory = async (id) => {
     }
 }
 
-const fetchCategoryArticles = async (id) => {
+const fetchCategoryArticles = async (id, page?) => {
+    let url = `${process.env.REACT_APP_API_BASE_URL}/categories/${id}/articles?size=20`;
+
+    if (page)
+        url += `&page=${page}`
+
     try {
-        const results = await axios.get<ArticleResults[]>(`${process.env.REACT_APP_API_BASE_URL}/categories/${id}/articles?size=20`);
+        const results = await axios.get<ArticleResults[]>(url);
         return results.data;
     } catch (error) {
         console.error("Error fetching articles for categor: ", error);
