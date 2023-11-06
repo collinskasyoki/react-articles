@@ -56,6 +56,16 @@ const fetchCategories = async() => {
     }
 }
 
+const fetchOneCategory = async (id) => {
+    try {
+        const results = await axios.get<Category>(`${process.env.REACT_APP_API_BASE_URL}/categories/${id}`);
+        return results.data;
+    } catch (error) {
+        console.error("Error fetching category: ", error);
+        throw error;
+    }
+}
+
 const fetchCategoryArticles = async (id) => {
     try {
         const results = await axios.get<ArticleResults[]>(`${process.env.REACT_APP_API_BASE_URL}/categories/${id}/articles?size=20`);
@@ -66,4 +76,4 @@ const fetchCategoryArticles = async (id) => {
     }
 }
 
-export { fetchArticles, fetchOneArticle, fetchCategories, fetchCategoryArticles };
+export { fetchArticles, fetchOneArticle, fetchCategories, fetchOneCategory, fetchCategoryArticles };
