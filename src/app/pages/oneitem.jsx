@@ -63,7 +63,7 @@ const OneItem = () => {
                   </p>
                 </div>
 
-                <div className="pagenav group">
+                {/* <div className="pagenav group">
                   <div className="prev-nav">
                     <a href="#" rel="prev">
                       <span>Previous</span>
@@ -76,7 +76,7 @@ const OneItem = () => {
                       Next Post
                     </a>
                   </div>
-                </div>
+                </div> */}
               </article>
             </div>
           </div>
