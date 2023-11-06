@@ -5,6 +5,7 @@ import Categories from "../app/pages/categories";
 import Sites from "../app/pages/sites";
 import About from "../app/pages/about";
 import OneItem from "../app/pages/oneitem";
+import OneCategory from "../app/pages/onecategory";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/categories",
         element: <Categories />,
+      },
+      {
+        path: "/categories/:id",
+        element: <OneCategory />,
       },
       {
         path: "/sites",
