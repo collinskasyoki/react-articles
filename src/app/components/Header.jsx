@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const [menu, setMenu] = useState(null);
+
+  const toggleMenu = () => {
+    setMenu((prevState) => (prevState = !prevState));
+  };
+
   return (
     <header className="short-header">
       <div className="gradient-block"></div>
@@ -12,7 +18,10 @@ const Header = () => {
         </div>
 
         <nav id="main-nav-wrap">
-          <ul className="main-navigation sf-menu sf-js-enabled">
+          <ul
+            className="main-navigation sf-menu sf-js-enabled"
+            style={menu ? { display: "block" } : {}}
+          >
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -41,7 +50,6 @@ const Header = () => {
                 autoComplete="off"
               />
             </label>
-            {/* Remove readonly when implementing */}
             <input
               readOnly={true}
               type="submit"
@@ -56,10 +64,14 @@ const Header = () => {
         </div>
 
         <div className="triggers">
-          <a className="search-trigger" href="#">
+          {/* <a className="search-trigger" href="#">
             <i className="fa fa-search"></i>
-          </a>
-          <a className="menu-toggle" href="#">
+          </a> */}
+          <a
+            className={`menu-toggle ${menu ? "is-clicked" : ""}`}
+            href="#"
+            onClick={() => toggleMenu()}
+          >
             <span>Menu</span>
           </a>
         </div>
