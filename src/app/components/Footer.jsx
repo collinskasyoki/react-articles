@@ -10,10 +10,10 @@ const Footer = () => {
             <h4>About This Site</h4>
 
             <p>
-              Lorem ipsum Ut velit dolor Ut labore id fugiat in ut fugiat
-              nostrud qui in dolore commodo eu magna Duis cillum dolor officia
-              esse mollit proident Excepteur exercitation nulla. Lorem ipsum In
-              reprehenderit commodo aliqua irure labore.
+              This is the front-end of an article collection backend that
+              periodically checks a few of my favourite sites and blogs, scraps
+              the data, and gathers it in a database. The database feeds a
+              FastAPI backend which then feeds this site.
             </p>
           </div>
 
@@ -21,9 +21,6 @@ const Footer = () => {
             <h4>Site Links</h4>
 
             <ul>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
               <li>
                 <Link to="/categories">Categories</Link>
               </li>
