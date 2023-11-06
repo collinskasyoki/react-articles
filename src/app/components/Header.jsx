@@ -12,7 +12,7 @@ const Header = () => {
         </div>
 
         <nav id="main-nav-wrap">
-          <ul className="main-navigation sf-menu">
+          <ul className="main-navigation sf-menu sf-js-enabled">
             <li>
               <Link to="/">Home</Link>
             </li>
