@@ -1,6 +1,13 @@
 import axios from "axios";
 
 
+interface Site {
+    id: number;
+    title: string;
+    link: string;
+    description: string;
+}
+
 interface Category {
     id: number;
     name: string;
@@ -24,6 +31,16 @@ interface ArticleResults {
     page: number;
     size: number;
     pages: number;
+}
+
+const fetchSites = async () => {
+    try {
+        const results = await axios.get<Site[]>(`${process.env.REACT_APP_API_BASE_URL}/sites`);
+        return results.data;
+    } catch (error) {
+        console.error("Error fetching sites: ", error);
+        throw error;
+    }
 }
 
 const fetchArticles = async (page?) => {
@@ -85,4 +102,4 @@ const fetchCategoryArticles = async (id, page?) => {
     }
 }
 
-export { fetchArticles, fetchOneArticle, fetchCategories, fetchOneCategory, fetchCategoryArticles };
+export { fetchSites, fetchArticles, fetchOneArticle, fetchCategories, fetchOneCategory, fetchCategoryArticles };
