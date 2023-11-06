@@ -1110,6 +1110,7 @@ input::-moz-focus-inner {
 	-webkit-transition: all 0.3s ease-in-out;
 	-ms-transition: all 0.3s ease-in-out;
 	transition: all 0.3s ease-in-out;
+	width: 100%;
 }
 
 .bricks-wrapper .entry-thumb .thumb-link::before {
