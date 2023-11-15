@@ -34,7 +34,7 @@ const ArticleRenderer = ({ articles }) => {
               </article>
             );
           })
-        : "there"}
+        : "Site Not Available. Please Try Again Later."}
     </>
   );
 };
