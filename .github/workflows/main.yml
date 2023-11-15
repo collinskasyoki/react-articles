@@ -1,0 +1,51 @@
+name: Lint-Personal-Site
+
+on:
+  push:
+    branches: ["main"]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  super-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+        
+      - name: Lint-Personal-Site
+        uses: github/super-linter@v4
+        env: 
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: "main"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Build React App
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.16.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build App
+        run: npm run build
+          
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2.5.1
+        with:
+          key: ${{ secrets.VPS_SECRET_KEY }}
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+      - name: Add Known Hosts
+        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      - name: HTML files
+        run: rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' ./dist ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/salt/articles2/
