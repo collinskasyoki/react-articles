@@ -51,4 +51,4 @@ jobs:
       - name: Add Known Hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: HTML files
-        run: rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' ./dist ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/salt/articles2/
+        run: rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/salt/articles2/
