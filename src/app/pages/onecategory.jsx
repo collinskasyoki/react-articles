@@ -63,7 +63,7 @@ const OneCategory = () => {
                         page === 1 && "inactive"
                       }`}
                       style={page !== 1 ? { cursor: "pointer" } : {}}
-                      onClick={page !== 1 && (() => pageChange(page - 1))}
+                      onClick={page !== 1 ? (() => pageChange(page - 1)) : (undefined)}
                     >
                       Prev
                     </span>
@@ -89,7 +89,7 @@ const OneCategory = () => {
                       }`}
                       style={page !== pages.length ? { cursor: "pointer" } : {}}
                       onClick={
-                        page !== pages.length && (() => pageChange(page + 1))
+                        page !== pages.length ? (() => pageChange(page + 1)) : (undefined)
                       }
                     >
                       Next

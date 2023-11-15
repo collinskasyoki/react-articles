@@ -42,7 +42,7 @@ const MainPage = () => {
                 <span
                   className={`page-numbers prev ${page === 1 && "inactive"}`}
                   style={page !== 1 ? { cursor: "pointer" } : {}}
-                  onClick={page !== 1 && (() => pageChange(page - 1))}
+                  onClick={page !== 1 ? () => pageChange(page - 1) : (undefined)}
                 >
                   Prev
                 </span>
@@ -68,7 +68,7 @@ const MainPage = () => {
                   }`}
                   style={page !== pages.length ? { cursor: "pointer" } : {}}
                   onClick={
-                    page !== pages.length && (() => pageChange(page + 1))
+                    page !== pages.length ? (() => pageChange(page + 1)) : (undefined)
                   }
                 >
                   Next
