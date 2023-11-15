@@ -48,6 +48,8 @@ jobs:
         with:
           key: ${{ secrets.VPS_SECRET_KEY }}
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+      - name: SSH key permissions
+        run: chmod 600 .ssh/id_rsa
       - name: Add Known Hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: HTML files
